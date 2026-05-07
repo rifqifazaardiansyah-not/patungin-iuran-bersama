@@ -45,6 +45,70 @@ export const members = [
   { id: 6, name: "Maya Putri",   nim: "2021006", phone: "0838-1010-5050", status: "paid"    as PaymentStatus, lastPaid: "8 Mei 2025" },
 ];
 
+export type CategoryKind = "rutin" | "event" | "done";
+
+export const categories = [
+  {
+    id: "iuran-april",
+    name: "Iuran Bulanan – April 2025",
+    kind: "rutin" as CategoryKind,
+    period: "April 2025",
+    typeLabel: "Iuran Rutin",
+    target: 400000,
+    collected: 300000,
+    totalMembers: 8,
+    paidMembers: 6,
+    paid: [
+      { id: 1, name: "Andi Pratama", amount: 50000, date: "5 Apr 2025", method: "BCA Transfer" },
+      { id: 2, name: "Maya Putri",   amount: 50000, date: "6 Apr 2025", method: "QRIS" },
+      { id: 3, name: "Rio Hidayat",  amount: 50000, date: "7 Apr 2025", method: "BCA Transfer" },
+      { id: 4, name: "Budi Santoso", amount: 50000, date: "8 Apr 2025", method: "Tunai" },
+      { id: 5, name: "Dewi Lestari", amount: 50000, date: "9 Apr 2025", method: "QRIS" },
+      { id: 6, name: "Sinta Maharani", amount: 50000, date: "10 Apr 2025", method: "BRI Transfer" },
+    ],
+    unpaid: [
+      { id: 7, name: "Siti Nurhaliza" },
+      { id: 8, name: "Tono Wijaya" },
+    ],
+  },
+  {
+    id: "ospek-2025",
+    name: "Patungan Ospek 2025",
+    kind: "event" as CategoryKind,
+    period: "Event Ospek 2025",
+    typeLabel: "Patungan Event",
+    target: 600000,
+    collected: 375000,
+    totalMembers: 8,
+    paidMembers: 5,
+    paid: [
+      { id: 1, name: "Andi Pratama", amount: 75000, date: "12 Apr 2025", method: "QRIS" },
+      { id: 2, name: "Maya Putri",   amount: 75000, date: "12 Apr 2025", method: "BCA Transfer" },
+      { id: 3, name: "Rio Hidayat",  amount: 75000, date: "13 Apr 2025", method: "BCA Transfer" },
+      { id: 4, name: "Dewi Lestari", amount: 75000, date: "14 Apr 2025", method: "QRIS" },
+      { id: 5, name: "Sinta Maharani", amount: 75000, date: "15 Apr 2025", method: "Tunai" },
+    ],
+    unpaid: [
+      { id: 6, name: "Siti Nurhaliza" },
+      { id: 7, name: "Budi Santoso" },
+      { id: 8, name: "Tono Wijaya" },
+    ],
+  },
+  {
+    id: "iuran-mingguan",
+    name: "Iuran Mingguan – Maret 2025",
+    kind: "done" as CategoryKind,
+    period: "Maret 2025",
+    typeLabel: "Iuran Rutin",
+    target: 200000,
+    collected: 200000,
+    totalMembers: 8,
+    paidMembers: 8,
+    paid: [],
+    unpaid: [],
+  },
+];
+
 export const recentTx = [
   { id: 1, name: "Andi Pratama", type: "Iuran Bulanan", amount: 100000, status: "paid"    as PaymentStatus, date: "12 Mei" },
   { id: 2, name: "Maya Putri",   type: "Patungan Event", amount: 50000, status: "paid"    as PaymentStatus, date: "10 Mei" },
