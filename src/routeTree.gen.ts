@@ -9,18 +9,84 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TransaksiRouteImport } from './routes/transaksi'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ProfilRouteImport } from './routes/profil'
+import { Route as PengumumanRouteImport } from './routes/pengumuman'
+import { Route as NotifikasiRouteImport } from './routes/notifikasi'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LaporanRouteImport } from './routes/laporan'
+import { Route as KonfirmasiBayarRouteImport } from './routes/konfirmasi-bayar'
+import { Route as JoinGrupRouteImport } from './routes/join-grup'
+import { Route as IurankuRouteImport } from './routes/iuranku'
+import { Route as InfoGrupRouteImport } from './routes/info-grup'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as AnggotaRouteImport } from './routes/anggota'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TransaksiRoute = TransaksiRouteImport.update({
+  id: '/transaksi',
+  path: '/transaksi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfilRoute = ProfilRouteImport.update({
+  id: '/profil',
+  path: '/profil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PengumumanRoute = PengumumanRouteImport.update({
+  id: '/pengumuman',
+  path: '/pengumuman',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotifikasiRoute = NotifikasiRouteImport.update({
+  id: '/notifikasi',
+  path: '/notifikasi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LaporanRoute = LaporanRouteImport.update({
+  id: '/laporan',
+  path: '/laporan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KonfirmasiBayarRoute = KonfirmasiBayarRouteImport.update({
+  id: '/konfirmasi-bayar',
+  path: '/konfirmasi-bayar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinGrupRoute = JoinGrupRouteImport.update({
+  id: '/join-grup',
+  path: '/join-grup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IurankuRoute = IurankuRouteImport.update({
+  id: '/iuranku',
+  path: '/iuranku',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InfoGrupRoute = InfoGrupRouteImport.update({
+  id: '/info-grup',
+  path: '/info-grup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnggotaRoute = AnggotaRouteImport.update({
+  id: '/anggota',
+  path: '/anggota',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -31,36 +97,130 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/anggota': typeof AnggotaRoute
+  '/home': typeof HomeRoute
+  '/info-grup': typeof InfoGrupRoute
+  '/iuranku': typeof IurankuRoute
+  '/join-grup': typeof JoinGrupRoute
+  '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
+  '/laporan': typeof LaporanRoute
   '/login': typeof LoginRoute
+  '/notifikasi': typeof NotifikasiRoute
+  '/pengumuman': typeof PengumumanRoute
+  '/profil': typeof ProfilRoute
   '/register': typeof RegisterRoute
+  '/transaksi': typeof TransaksiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/anggota': typeof AnggotaRoute
+  '/home': typeof HomeRoute
+  '/info-grup': typeof InfoGrupRoute
+  '/iuranku': typeof IurankuRoute
+  '/join-grup': typeof JoinGrupRoute
+  '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
+  '/laporan': typeof LaporanRoute
   '/login': typeof LoginRoute
+  '/notifikasi': typeof NotifikasiRoute
+  '/pengumuman': typeof PengumumanRoute
+  '/profil': typeof ProfilRoute
   '/register': typeof RegisterRoute
+  '/transaksi': typeof TransaksiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/anggota': typeof AnggotaRoute
+  '/home': typeof HomeRoute
+  '/info-grup': typeof InfoGrupRoute
+  '/iuranku': typeof IurankuRoute
+  '/join-grup': typeof JoinGrupRoute
+  '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
+  '/laporan': typeof LaporanRoute
   '/login': typeof LoginRoute
+  '/notifikasi': typeof NotifikasiRoute
+  '/pengumuman': typeof PengumumanRoute
+  '/profil': typeof ProfilRoute
   '/register': typeof RegisterRoute
+  '/transaksi': typeof TransaksiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/anggota'
+    | '/home'
+    | '/info-grup'
+    | '/iuranku'
+    | '/join-grup'
+    | '/konfirmasi-bayar'
+    | '/laporan'
+    | '/login'
+    | '/notifikasi'
+    | '/pengumuman'
+    | '/profil'
+    | '/register'
+    | '/transaksi'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register'
-  id: '__root__' | '/' | '/login' | '/register'
+  to:
+    | '/'
+    | '/anggota'
+    | '/home'
+    | '/info-grup'
+    | '/iuranku'
+    | '/join-grup'
+    | '/konfirmasi-bayar'
+    | '/laporan'
+    | '/login'
+    | '/notifikasi'
+    | '/pengumuman'
+    | '/profil'
+    | '/register'
+    | '/transaksi'
+  id:
+    | '__root__'
+    | '/'
+    | '/anggota'
+    | '/home'
+    | '/info-grup'
+    | '/iuranku'
+    | '/join-grup'
+    | '/konfirmasi-bayar'
+    | '/laporan'
+    | '/login'
+    | '/notifikasi'
+    | '/pengumuman'
+    | '/profil'
+    | '/register'
+    | '/transaksi'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnggotaRoute: typeof AnggotaRoute
+  HomeRoute: typeof HomeRoute
+  InfoGrupRoute: typeof InfoGrupRoute
+  IurankuRoute: typeof IurankuRoute
+  JoinGrupRoute: typeof JoinGrupRoute
+  KonfirmasiBayarRoute: typeof KonfirmasiBayarRoute
+  LaporanRoute: typeof LaporanRoute
   LoginRoute: typeof LoginRoute
+  NotifikasiRoute: typeof NotifikasiRoute
+  PengumumanRoute: typeof PengumumanRoute
+  ProfilRoute: typeof ProfilRoute
   RegisterRoute: typeof RegisterRoute
+  TransaksiRoute: typeof TransaksiRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/transaksi': {
+      id: '/transaksi'
+      path: '/transaksi'
+      fullPath: '/transaksi'
+      preLoaderRoute: typeof TransaksiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -68,11 +228,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profil': {
+      id: '/profil'
+      path: '/profil'
+      fullPath: '/profil'
+      preLoaderRoute: typeof ProfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pengumuman': {
+      id: '/pengumuman'
+      path: '/pengumuman'
+      fullPath: '/pengumuman'
+      preLoaderRoute: typeof PengumumanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifikasi': {
+      id: '/notifikasi'
+      path: '/notifikasi'
+      fullPath: '/notifikasi'
+      preLoaderRoute: typeof NotifikasiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/laporan': {
+      id: '/laporan'
+      path: '/laporan'
+      fullPath: '/laporan'
+      preLoaderRoute: typeof LaporanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/konfirmasi-bayar': {
+      id: '/konfirmasi-bayar'
+      path: '/konfirmasi-bayar'
+      fullPath: '/konfirmasi-bayar'
+      preLoaderRoute: typeof KonfirmasiBayarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join-grup': {
+      id: '/join-grup'
+      path: '/join-grup'
+      fullPath: '/join-grup'
+      preLoaderRoute: typeof JoinGrupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iuranku': {
+      id: '/iuranku'
+      path: '/iuranku'
+      fullPath: '/iuranku'
+      preLoaderRoute: typeof IurankuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/info-grup': {
+      id: '/info-grup'
+      path: '/info-grup'
+      fullPath: '/info-grup'
+      preLoaderRoute: typeof InfoGrupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anggota': {
+      id: '/anggota'
+      path: '/anggota'
+      fullPath: '/anggota'
+      preLoaderRoute: typeof AnggotaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,8 +317,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnggotaRoute: AnggotaRoute,
+  HomeRoute: HomeRoute,
+  InfoGrupRoute: InfoGrupRoute,
+  IurankuRoute: IurankuRoute,
+  JoinGrupRoute: JoinGrupRoute,
+  KonfirmasiBayarRoute: KonfirmasiBayarRoute,
+  LaporanRoute: LaporanRoute,
   LoginRoute: LoginRoute,
+  NotifikasiRoute: NotifikasiRoute,
+  PengumumanRoute: PengumumanRoute,
+  ProfilRoute: ProfilRoute,
   RegisterRoute: RegisterRoute,
+  TransaksiRoute: TransaksiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
