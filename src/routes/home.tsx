@@ -70,7 +70,7 @@ function BendaharaHome() {
           return (
             <div key={i} className="bg-card rounded-2xl p-3.5 border border-border card-shadow">
               <div className={`w-9 h-9 rounded-xl ${s.bg} grid place-items-center`}>
-                <Ic className={`w-4.5 h-4.5 ${s.color}`} />
+                <Ic className={`w-[18px] h-[18px] ${s.color}`} />
               </div>
               <p className="mt-2.5 text-[15px] font-extrabold text-foreground leading-tight">{s.n}</p>
               <p className="text-[11px] text-muted-foreground font-medium">{s.l}</p>

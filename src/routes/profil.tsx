@@ -44,7 +44,7 @@ function ProfilPage() {
               return (
                 <button key={i} className="w-full flex items-center gap-3 p-4 text-left">
                   <div className="w-9 h-9 rounded-xl bg-primary-soft grid place-items-center">
-                    <Ic className="w-4.5 h-4.5 text-primary" />
+                    <Ic className="w-[18px] h-[18px] text-primary" />
                   </div>
                   <p className="flex-1 text-[13px] font-bold text-foreground">{it.label}</p>
                   {it.suffix && <span className="text-[11px] text-muted-foreground">{it.suffix}</span>}
@@ -54,7 +54,7 @@ function ProfilPage() {
             })}
             <button onClick={() => { auth.clear(); navigate({ to: "/login" }); }} className="w-full flex items-center gap-3 p-4 text-left">
               <div className="w-9 h-9 rounded-xl bg-destructive-soft grid place-items-center">
-                <LogOut className="w-4.5 h-4.5 text-destructive" />
+                <LogOut className="w-[18px] h-[18px] text-destructive" />
               </div>
               <p className="flex-1 text-[13px] font-bold text-destructive">Keluar</p>
             </button>
