@@ -16,7 +16,7 @@ function DetailKategoriPage() {
 
   return (
     <PhoneFrame>
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full relative">
         {/* Header */}
         <div className="px-5 pt-5 pb-6 bg-gradient-to-br from-navy to-primary text-white rounded-b-3xl">
           <div className="flex items-center gap-3">
