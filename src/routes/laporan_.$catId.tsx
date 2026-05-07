@@ -4,7 +4,7 @@ import { PhoneFrame } from "@/components/PhoneFrame";
 import { categories, formatRp, initials } from "@/lib/mock";
 import { ArrowLeft, Bell, Send } from "lucide-react";
 
-export const Route = createFileRoute("/laporan/$catId")({
+export const Route = createFileRoute("/laporan_/$catId")({
   component: DetailKategoriPage,
 });
 
