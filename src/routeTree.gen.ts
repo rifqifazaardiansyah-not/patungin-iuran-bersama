@@ -23,6 +23,7 @@ import { Route as InfoGrupRouteImport } from './routes/info-grup'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as AnggotaRouteImport } from './routes/anggota'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LaporanCatIdRouteImport } from './routes/laporan.$catId'
 
 const TransaksiRoute = TransaksiRouteImport.update({
   id: '/transaksi',
@@ -94,6 +95,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LaporanCatIdRoute = LaporanCatIdRouteImport.update({
+  id: '/$catId',
+  path: '/$catId',
+  getParentRoute: () => LaporanRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,13 +109,14 @@ export interface FileRoutesByFullPath {
   '/iuranku': typeof IurankuRoute
   '/join-grup': typeof JoinGrupRoute
   '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
-  '/laporan': typeof LaporanRoute
+  '/laporan': typeof LaporanRouteWithChildren
   '/login': typeof LoginRoute
   '/notifikasi': typeof NotifikasiRoute
   '/pengumuman': typeof PengumumanRoute
   '/profil': typeof ProfilRoute
   '/register': typeof RegisterRoute
   '/transaksi': typeof TransaksiRoute
+  '/laporan/$catId': typeof LaporanCatIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -119,13 +126,14 @@ export interface FileRoutesByTo {
   '/iuranku': typeof IurankuRoute
   '/join-grup': typeof JoinGrupRoute
   '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
-  '/laporan': typeof LaporanRoute
+  '/laporan': typeof LaporanRouteWithChildren
   '/login': typeof LoginRoute
   '/notifikasi': typeof NotifikasiRoute
   '/pengumuman': typeof PengumumanRoute
   '/profil': typeof ProfilRoute
   '/register': typeof RegisterRoute
   '/transaksi': typeof TransaksiRoute
+  '/laporan/$catId': typeof LaporanCatIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -136,13 +144,14 @@ export interface FileRoutesById {
   '/iuranku': typeof IurankuRoute
   '/join-grup': typeof JoinGrupRoute
   '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
-  '/laporan': typeof LaporanRoute
+  '/laporan': typeof LaporanRouteWithChildren
   '/login': typeof LoginRoute
   '/notifikasi': typeof NotifikasiRoute
   '/pengumuman': typeof PengumumanRoute
   '/profil': typeof ProfilRoute
   '/register': typeof RegisterRoute
   '/transaksi': typeof TransaksiRoute
+  '/laporan/$catId': typeof LaporanCatIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/profil'
     | '/register'
     | '/transaksi'
+    | '/laporan/$catId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/profil'
     | '/register'
     | '/transaksi'
+    | '/laporan/$catId'
   id:
     | '__root__'
     | '/'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/profil'
     | '/register'
     | '/transaksi'
+    | '/laporan/$catId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -203,7 +215,7 @@ export interface RootRouteChildren {
   IurankuRoute: typeof IurankuRoute
   JoinGrupRoute: typeof JoinGrupRoute
   KonfirmasiBayarRoute: typeof KonfirmasiBayarRoute
-  LaporanRoute: typeof LaporanRoute
+  LaporanRoute: typeof LaporanRouteWithChildren
   LoginRoute: typeof LoginRoute
   NotifikasiRoute: typeof NotifikasiRoute
   PengumumanRoute: typeof PengumumanRoute
@@ -312,8 +324,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/laporan/$catId': {
+      id: '/laporan/$catId'
+      path: '/$catId'
+      fullPath: '/laporan/$catId'
+      preLoaderRoute: typeof LaporanCatIdRouteImport
+      parentRoute: typeof LaporanRoute
+    }
   }
 }
+
+interface LaporanRouteChildren {
+  LaporanCatIdRoute: typeof LaporanCatIdRoute
+}
+
+const LaporanRouteChildren: LaporanRouteChildren = {
+  LaporanCatIdRoute: LaporanCatIdRoute,
+}
+
+const LaporanRouteWithChildren =
+  LaporanRoute._addFileChildren(LaporanRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -323,7 +353,7 @@ const rootRouteChildren: RootRouteChildren = {
   IurankuRoute: IurankuRoute,
   JoinGrupRoute: JoinGrupRoute,
   KonfirmasiBayarRoute: KonfirmasiBayarRoute,
-  LaporanRoute: LaporanRoute,
+  LaporanRoute: LaporanRouteWithChildren,
   LoginRoute: LoginRoute,
   NotifikasiRoute: NotifikasiRoute,
   PengumumanRoute: PengumumanRoute,
@@ -334,3 +364,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
