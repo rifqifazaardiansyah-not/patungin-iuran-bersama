@@ -14,7 +14,7 @@ export function PhoneFrame({ children, dark = false }: { children: ReactNode; da
           <span>•••</span>
           <span>100%</span>
         </div>
-        <div className="flex-1 overflow-y-auto no-scrollbar">{children}</div>
+        <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar">{children}</div>
       </div>
     </div>
   );
