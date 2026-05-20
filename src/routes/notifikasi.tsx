@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
+import { createProtectedRouteGuard } from "@/lib/route-guards";
 import { notifications } from "@/lib/mock";
 import { Megaphone, CheckCircle2, AlertTriangle, Bell } from "lucide-react";
 
 export const Route = createFileRoute("/notifikasi")({
+  beforeLoad: createProtectedRouteGuard(),
   component: NotifikasiPage,
 });
 

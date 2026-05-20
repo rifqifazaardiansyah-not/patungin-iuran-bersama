@@ -1,23 +1,48 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { PhoneFrame } from "./PhoneFrame";
 import { BottomNav } from "./BottomNav";
-import { auth, Role } from "@/lib/mock";
+import { useAuth } from "@/context/auth-context";
 
 export function AppShell({ children, hideNav = false }: { children: ReactNode; hideNav?: boolean }) {
   const navigate = useNavigate();
-  const [role, setRole] = useState<Role | null>(null);
+  const { isAuthenticated, role, isLoading, error } = useAuth();
 
   useEffect(() => {
-    const r = localStorage.getItem("patungin_role") as Role | null;
-    if (!r) {
+    if (isLoading) return;
+    
+    if (!isAuthenticated) {
       navigate({ to: "/login" });
-      return;
     }
-    setRole(r);
-  }, [navigate]);
+  }, [isAuthenticated, isLoading, navigate]);
 
-  if (!role) return null;
+  if (isLoading) {
+    return (
+      <PhoneFrame>
+        <div className="flex items-center justify-center min-h-full">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (error || !role) {
+    return (
+      <PhoneFrame>
+        <div className="flex flex-col items-center justify-center min-h-full px-6 gap-4">
+          <div className="text-4xl">⚠️</div>
+          <h2 className="text-lg font-bold">Terjadi Kesalahan</h2>
+          <p className="text-sm text-muted-foreground text-center">{error || "Gagal memverifikasi session"}</p>
+          <button
+            onClick={() => navigate({ to: "/login" })}
+            className="px-4 py-2 rounded-lg bg-primary text-white font-semibold text-sm"
+          >
+            Kembali ke Login
+          </button>
+        </div>
+      </PhoneFrame>
+    );
+  }
 
   return (
     <PhoneFrame>
@@ -29,8 +54,7 @@ export function AppShell({ children, hideNav = false }: { children: ReactNode; h
   );
 }
 
-export function useRole(): Role {
-  const [role, setRole] = useState<Role>("bendahara");
-  useEffect(() => { setRole(auth.getRole()); }, []);
-  return role;
+export function useRole() {
+  const { role } = useAuth();
+  return role || "anggota";
 }

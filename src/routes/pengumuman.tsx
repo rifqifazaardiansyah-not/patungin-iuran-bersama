@@ -1,10 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { PhoneFrame } from "@/components/PhoneFrame";
+import { createBendaharaOnlyGuard } from "@/lib/route-guards";
 import { ChevronLeft, Send, CheckCircle2, Megaphone } from "lucide-react";
 import { announcements, group } from "@/lib/mock";
 
 export const Route = createFileRoute("/pengumuman")({
+  beforeLoad: createBendaharaOnlyGuard(),
   component: PengumumanPage,
 });
 

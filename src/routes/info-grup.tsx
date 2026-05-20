@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/PhoneFrame";
+import { createProtectedRouteGuard } from "@/lib/route-guards";
 import { group, formatRp } from "@/lib/mock";
 import { ChevronLeft, Copy, Share2, QrCode, Building2 } from "lucide-react";
 
 export const Route = createFileRoute("/info-grup")({
+  beforeLoad: createProtectedRouteGuard(),
   component: InfoGrupPage,
 });
 

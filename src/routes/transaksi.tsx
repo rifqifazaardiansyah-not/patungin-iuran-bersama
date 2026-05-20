@@ -2,10 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { StatusBadge } from "@/components/StatusBadge";
+import { createProtectedRouteGuard } from "@/lib/route-guards";
 import { recentTx, formatRp, initials, members } from "@/lib/mock";
 import { ChevronDown, Image as ImageIcon, Check, X } from "lucide-react";
 
 export const Route = createFileRoute("/transaksi")({
+  beforeLoad: createProtectedRouteGuard(),
   component: TransaksiPage,
 });
 

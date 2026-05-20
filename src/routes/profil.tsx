@@ -1,10 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
+import { createProtectedRouteGuard } from "@/lib/route-guards";
 import { auth, initials } from "@/lib/mock";
 import { Pencil, Bell, Lock, Smartphone, HelpCircle, LogOut, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/profil")({
+  beforeLoad: createProtectedRouteGuard(),
   component: ProfilPage,
 });
 

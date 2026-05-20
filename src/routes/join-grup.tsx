@@ -1,10 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { PhoneFrame } from "@/components/PhoneFrame";
+import { createAnggotaOnlyGuard } from "@/lib/route-guards";
 import { ChevronLeft, Building2, CheckCircle2, Users } from "lucide-react";
 import { group } from "@/lib/mock";
 
 export const Route = createFileRoute("/join-grup")({
+  beforeLoad: createAnggotaOnlyGuard(),
   component: JoinPage,
 });
 

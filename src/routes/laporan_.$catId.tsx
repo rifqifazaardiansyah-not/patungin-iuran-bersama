@@ -1,10 +1,12 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import { PhoneFrame } from "@/components/PhoneFrame";
+import { createBendaharaOnlyGuard } from "@/lib/route-guards";
 import { categories, formatRp, initials } from "@/lib/mock";
 import { ArrowLeft, Bell, Send } from "lucide-react";
 
 export const Route = createFileRoute("/laporan_/$catId")({
+  beforeLoad: createBendaharaOnlyGuard(),
   component: DetailKategoriPage,
 });
 

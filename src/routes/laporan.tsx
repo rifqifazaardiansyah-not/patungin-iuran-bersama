@@ -2,10 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { AppShell } from "@/components/AppShell";
 import { StatusBadge } from "@/components/StatusBadge";
+import { createBendaharaOnlyGuard } from "@/lib/route-guards";
 import { formatRp, recentTx, categories } from "@/lib/mock";
 import { Download, ChevronDown, X, FileSpreadsheet, FileText, BarChart3, List, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/laporan")({
+  beforeLoad: createBendaharaOnlyGuard(),
   component: LaporanPage,
 });
 

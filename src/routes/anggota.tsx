@@ -2,10 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { StatusBadge } from "@/components/StatusBadge";
+import { createBendaharaOnlyGuard } from "@/lib/route-guards";
 import { members, group, initials, PaymentStatus } from "@/lib/mock";
 import { Plus, Search, Copy, Lock, X, Bell, Trash2, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/anggota")({
+  beforeLoad: createBendaharaOnlyGuard(),
   component: AnggotaPage,
 });
 

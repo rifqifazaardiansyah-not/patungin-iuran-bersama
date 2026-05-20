@@ -1,8 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { createPublicOnlyGuard } from "@/lib/route-guards";
 import logo from "@/assets/patungin-logo.png";
 
 export const Route = createFileRoute("/")({
+  beforeLoad: createPublicOnlyGuard(),
   component: Splash,
 });
 

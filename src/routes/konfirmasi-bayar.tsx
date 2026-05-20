@@ -1,10 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { PhoneFrame } from "@/components/PhoneFrame";
+import { createAnggotaOnlyGuard } from "@/lib/route-guards";
 import { Camera, ChevronLeft, CheckCircle2, ChevronDown } from "lucide-react";
 import { formatRp } from "@/lib/mock";
 
 export const Route = createFileRoute("/konfirmasi-bayar")({
+  beforeLoad: createAnggotaOnlyGuard(),
   component: KonfirmasiPage,
 });
 

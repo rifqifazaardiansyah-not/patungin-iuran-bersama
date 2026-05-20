@@ -2,10 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { StatusBadge } from "@/components/StatusBadge";
+import { createAnggotaOnlyGuard } from "@/lib/route-guards";
 import { myDues, formatRp, PaymentStatus } from "@/lib/mock";
 import { CheckCircle2, AlertTriangle } from "lucide-react";
 
 export const Route = createFileRoute("/iuranku")({
+  beforeLoad: createAnggotaOnlyGuard(),
   component: IurankuPage,
 });
 

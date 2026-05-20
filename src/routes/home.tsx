@@ -2,10 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell, useRole } from "@/components/AppShell";
 import { AppHeader } from "@/components/AppHeader";
 import { StatusBadge } from "@/components/StatusBadge";
+import { createProtectedRouteGuard } from "@/lib/route-guards";
 import { auth, formatRp, group, recentTx, announcements, initials, myDues } from "@/lib/mock";
 import { Plus, Megaphone, Users, BarChart3, Camera, ClipboardList, Building2, CheckCircle2, AlertTriangle, Clock, Wallet, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/home")({
+  beforeLoad: createProtectedRouteGuard(),
   component: HomePage,
 });
 
