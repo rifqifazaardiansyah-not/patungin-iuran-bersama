@@ -4,7 +4,8 @@ import { AppShell } from "@/components/AppShell";
 import { StatusBadge } from "@/components/StatusBadge";
 import { createBendaharaOnlyGuard } from "@/lib/route-guards";
 import { formatRp, recentTx, categories } from "@/lib/mock";
-import { Download, ChevronDown, X, FileSpreadsheet, FileText, BarChart3, List, ChevronRight } from "lucide-react";
+import { Download, ChevronDown, X, FileSpreadsheet, FileText, BarChart3, List, ChevronRight, CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/laporan")({
   beforeLoad: createBendaharaOnlyGuard(),
@@ -34,6 +35,27 @@ function LaporanPage() {
     if (jenis === "rutin") return categories.filter(c => c.kind !== "event");
     return categories.filter(c => c.kind === "event");
   }, [jenis]);
+
+  // NEW: Demo export handler (V1.1)
+  const handleExport = (type: "excel" | "pdf") => {
+    setExportOpen(false);
+    toast.loading(`Menyiapkan ${type.toUpperCase()}...`, { duration: 1500 });
+    
+    setTimeout(() => {
+      toast.success(
+        <div className="flex items-start gap-2">
+          <CheckCircle2 className="w-5 h-5 text-success shrink-0 mt-0.5" />
+          <div>
+            <p className="font-bold">Export Berhasil!</p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Laporan_{type}_{new Date().getTime()}.{type === "excel" ? "xlsx" : "pdf"}
+            </p>
+          </div>
+        </div>,
+        { duration: 3000 }
+      );
+    }, 1500);
+  };
 
   const stats = [
     { l: "Total Terkumpul", v: formatRp(2150000), c: "from-primary to-primary-light" },
@@ -190,14 +212,14 @@ function LaporanPage() {
               <button onClick={() => setExportOpen(false)} className="w-9 h-9 rounded-full bg-secondary grid place-items-center"><X className="w-4 h-4" /></button>
             </div>
             <div className="space-y-2.5">
-              <button className="w-full p-4 rounded-2xl border border-border flex items-center gap-3">
+              <button onClick={() => handleExport("excel")} className="w-full p-4 rounded-2xl border border-border flex items-center gap-3 hover:bg-secondary transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-success-soft grid place-items-center"><FileSpreadsheet className="w-5 h-5 text-success" /></div>
                 <div className="text-left flex-1">
                   <p className="text-[13px] font-bold text-foreground">Export Excel</p>
                   <p className="text-[11px] text-muted-foreground">Format .xlsx untuk diolah lebih lanjut</p>
                 </div>
               </button>
-              <button className="w-full p-4 rounded-2xl border border-border flex items-center gap-3">
+              <button onClick={() => handleExport("pdf")} className="w-full p-4 rounded-2xl border border-border flex items-center gap-3 hover:bg-secondary transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-destructive-soft grid place-items-center"><FileText className="w-5 h-5 text-destructive" /></div>
                 <div className="text-left flex-1">
                   <p className="text-[13px] font-bold text-foreground">Export PDF</p>

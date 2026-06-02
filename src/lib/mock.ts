@@ -136,6 +136,125 @@ export const myDues = [
   { id: 5, month: "Maret 2025", type: "Iuran Mingguan", due: "10 Mar 2025", amount: 25000, status: "paid"   as PaymentStatus, paidAt: "9 Mar 2025", method: "Tunai" },
 ];
 
+// === NEW: Organizations Data (V1.1) ===
+export interface Organization {
+  id: string;
+  name: string;
+  type: "kampus" | "ukm" | "bem" | "komunitas" | "panitia";
+  memberCount: number;
+  role: Role;
+  balance: number;
+  duesStatus: PaymentStatus;
+  period: string;
+  isActive: boolean;
+}
+
+export const organizations: Organization[] = [
+  {
+    id: "hmti-2025",
+    name: "HMTI 2025",
+    type: "kampus",
+    memberCount: 32,
+    role: "bendahara",
+    balance: 2150000,
+    duesStatus: "paid",
+    period: "Mei 2025",
+    isActive: true,
+  },
+  {
+    id: "bem-fakultas",
+    name: "BEM Fakultas Teknik",
+    type: "bem",
+    memberCount: 125,
+    role: "anggota",
+    balance: 4500000,
+    duesStatus: "paid",
+    period: "Mei 2025",
+    isActive: true,
+  },
+  {
+    id: "panitia-semnas",
+    name: "Panitia Seminar Nasional 2025",
+    type: "panitia",
+    memberCount: 45,
+    role: "anggota",
+    balance: 8750000,
+    duesStatus: "unpaid",
+    period: "Event 2025",
+    isActive: true,
+  },
+];
+
+// === NEW: Pricing Plans Data (V1.1) ===
+export interface PricingPlan {
+  id: string;
+  name: string;
+  price: number | "custom";
+  period: "month" | "year" | "one-time";
+  features: string[];
+  popular?: boolean;
+  cta: string;
+}
+
+export const pricingPlans: PricingPlan[] = [
+  {
+    id: "free",
+    name: "Free",
+    price: 0,
+    period: "month",
+    cta: "Mulai Gratis",
+    features: [
+      "1 Organisasi",
+      "Maksimal 50 Anggota",
+      "Fitur Dasar Iuran",
+      "Laporan Sederhana",
+      "Support Komunitas",
+    ],
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    price: 29000,
+    period: "month",
+    popular: true,
+    cta: "Coba 14 Hari Gratis",
+    features: [
+      "Hingga 5 Organisasi",
+      "Unlimited Anggota",
+      "Reminder Otomatis (WhatsApp & Email)",
+      "Export PDF & Excel",
+      "Laporan Lengkap",
+      "Priority Support",
+      "Custom Kategori Iuran",
+    ],
+  },
+  {
+    id: "campus",
+    name: "Campus",
+    price: "custom",
+    period: "year",
+    cta: "Hubungi Sales",
+    features: [
+      "Dashboard Kampus Terpusat",
+      "Monitoring Seluruh Organisasi",
+      "Laporan Konsolidasi",
+      "White Label (Custom Branding)",
+      "API Access",
+      "Dedicated Account Manager",
+      "On-Premise Deployment (Optional)",
+      "Training & Onboarding",
+    ],
+  },
+];
+
+// === NEW: Campus Stats (V1.1) ===
+export const campusStats = {
+  totalOrganizations: 47,
+  totalMembers: 1834,
+  totalBalance: 127500000,
+  activeOrganizations: 42,
+};
+
 const ROLE_KEY = "patungin_role";
 const NAME_KEY = "patungin_name";
 

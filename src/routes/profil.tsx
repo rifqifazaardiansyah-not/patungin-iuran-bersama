@@ -1,9 +1,9 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { createProtectedRouteGuard } from "@/lib/route-guards";
 import { auth, initials } from "@/lib/mock";
-import { Pencil, Bell, Lock, Smartphone, HelpCircle, LogOut, ChevronRight } from "lucide-react";
+import { Pencil, Bell, Lock, Smartphone, HelpCircle, LogOut, ChevronRight, Building2, TrendingUp } from "lucide-react";
 
 export const Route = createFileRoute("/profil")({
   beforeLoad: createProtectedRouteGuard(),
@@ -16,11 +16,12 @@ function ProfilPage() {
   const role = auth.getRole();
 
   const items = [
-    { icon: Pencil, label: "Edit Profil" },
-    { icon: Bell, label: "Pengaturan Notifikasi" },
-    { icon: Lock, label: "Ubah Password" },
-    { icon: Smartphone, label: "Versi Aplikasi", suffix: "v1.0.0" },
-    { icon: HelpCircle, label: "Bantuan & FAQ" },
+    { icon: Pencil, label: "Edit Profil", to: null },
+    { icon: Building2, label: "Organisasi Saya", to: "/organisasi-saya" },
+    { icon: Bell, label: "Pengaturan Notifikasi", to: null },
+    { icon: Lock, label: "Ubah Password", to: null },
+    { icon: Smartphone, label: "Versi Aplikasi", suffix: "v1.1.0", to: null },
+    { icon: HelpCircle, label: "Mengapa Patungin?", to: "/mengapa-patungin" },
   ];
 
   return (
@@ -43,14 +44,24 @@ function ProfilPage() {
           <div className="bg-card rounded-2xl border border-border card-shadow divide-y divide-border overflow-hidden">
             {items.map((it, i) => {
               const Ic = it.icon;
-              return (
-                <button key={i} className="w-full flex items-center gap-3 p-4 text-left">
+              const content = (
+                <>
                   <div className="w-9 h-9 rounded-xl bg-primary-soft grid place-items-center">
                     <Ic className="w-[18px] h-[18px] text-primary" />
                   </div>
                   <p className="flex-1 text-[13px] font-bold text-foreground">{it.label}</p>
                   {it.suffix && <span className="text-[11px] text-muted-foreground">{it.suffix}</span>}
                   <ChevronRight className="w-4 h-4 text-muted-foreground" />
+                </>
+              );
+              
+              return it.to ? (
+                <Link key={i} to={it.to} className="w-full flex items-center gap-3 p-4">
+                  {content}
+                </Link>
+              ) : (
+                <button key={i} className="w-full flex items-center gap-3 p-4 text-left">
+                  {content}
                 </button>
               );
             })}
@@ -61,6 +72,20 @@ function ProfilPage() {
               <p className="flex-1 text-[13px] font-bold text-destructive">Keluar</p>
             </button>
           </div>
+
+          {/* NEW: Pricing CTA (V1.1) */}
+          <Link to="/pricing" className="mt-4 block">
+            <div className="rounded-2xl gradient-primary p-4 text-white card-shadow-lg flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-white/15 grid place-items-center shrink-0">
+                <TrendingUp className="w-5 h-5" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-extrabold">Upgrade ke Pro</p>
+                <p className="text-[11px] text-white/80 mt-0.5">Dapatkan fitur lengkap mulai Rp29k/bulan</p>
+              </div>
+              <ChevronRight className="w-5 h-5" />
+            </div>
+          </Link>
         </div>
       </div>
     </AppShell>

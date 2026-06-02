@@ -3,8 +3,8 @@ import { AppShell, useRole } from "@/components/AppShell";
 import { AppHeader } from "@/components/AppHeader";
 import { StatusBadge } from "@/components/StatusBadge";
 import { createProtectedRouteGuard } from "@/lib/route-guards";
-import { auth, formatRp, group, recentTx, announcements, initials, myDues } from "@/lib/mock";
-import { Plus, Megaphone, Users, BarChart3, Camera, ClipboardList, Building2, CheckCircle2, AlertTriangle, Clock, Wallet, ChevronRight } from "lucide-react";
+import { auth, formatRp, group, recentTx, announcements, initials, myDues, organizations } from "@/lib/mock";
+import { Plus, Megaphone, Users, BarChart3, Camera, ClipboardList, Building2, CheckCircle2, AlertTriangle, Clock, Wallet, ChevronRight, TrendingUp, Bell } from "lucide-react";
 
 export const Route = createFileRoute("/home")({
   beforeLoad: createProtectedRouteGuard(),
@@ -81,6 +81,49 @@ function BendaharaHome() {
         })}
       </div>
 
+      {/* NEW: Organization Summary Section (V1.1) */}
+      <div className="px-5 mt-5">
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-sm font-bold text-foreground">Ringkasan Organisasi</h4>
+          <Link to="/organisasi-saya" className="text-[11px] text-primary font-bold inline-flex items-center">
+            Lihat Semua <ChevronRight className="w-3 h-3" />
+          </Link>
+        </div>
+        <div className="bg-gradient-to-br from-primary/5 to-partial/5 rounded-2xl border border-primary/10 p-4">
+          <div className="flex items-start gap-3">
+            <div className="w-12 h-12 rounded-xl bg-primary grid place-items-center text-white shrink-0">
+              <Building2 className="w-6 h-6" />
+            </div>
+            <div className="flex-1">
+              <p className="text-[11px] text-muted-foreground font-medium">Total Saldo Organisasi</p>
+              <p className="text-xl font-extrabold text-foreground mt-0.5">{formatRp(organizations.find(o => o.isActive)?.balance || 0)}</p>
+              <div className="mt-3 flex items-center gap-4">
+                <div>
+                  <p className="text-[10px] text-muted-foreground">Total Anggota</p>
+                  <p className="text-[13px] font-bold text-foreground">{organizations.find(o => o.isActive)?.memberCount || 0}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-muted-foreground">Status Lunas</p>
+                  <div className="mt-0.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success text-white text-[10px] font-bold">
+                    <CheckCircle2 className="w-2.5 h-2.5" /> 100 dari 125
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-border flex items-center justify-between">
+                <span className="text-[11px] text-muted-foreground">Belum Bayar</span>
+                <span className="text-[12px] font-bold text-warning">25 anggota</span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-3 flex items-center gap-2 p-2.5 rounded-xl bg-white/50 border border-primary/10">
+            <TrendingUp className="w-4 h-4 text-success shrink-0" />
+            <p className="text-[11px] text-foreground">
+              <span className="font-bold">+12%</span> dari bulan lalu
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Quick actions */}
       <div className="px-5 mt-5">
         <h4 className="text-sm font-bold text-foreground mb-3">Aksi Cepat</h4>
@@ -102,6 +145,20 @@ function BendaharaHome() {
             );
           })}
         </div>
+
+        {/* NEW: Reminder Demo CTA (V1.1) */}
+        <Link to="/reminder-demo" className="mt-3 block">
+          <div className="p-3.5 rounded-xl bg-gradient-to-r from-warning/10 to-amber-400/10 border border-warning/20 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-warning grid place-items-center">
+              <Bell className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-[12px] font-bold text-foreground">Reminder Otomatis</p>
+              <p className="text-[10px] text-muted-foreground">Coba fitur Pro sekarang</p>
+            </div>
+            <ChevronRight className="w-4 h-4 text-warning" />
+          </div>
+        </Link>
       </div>
 
       {/* Recent transactions */}

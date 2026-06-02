@@ -10,10 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TransaksiRouteImport } from './routes/transaksi'
+import { Route as ReminderDemoRouteImport } from './routes/reminder-demo'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProfilRouteImport } from './routes/profil'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PengumumanRouteImport } from './routes/pengumuman'
+import { Route as OrganisasiSayaRouteImport } from './routes/organisasi-saya'
 import { Route as NotifikasiRouteImport } from './routes/notifikasi'
+import { Route as MengapaPatunginRouteImport } from './routes/mengapa-patungin'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LaporanRouteImport } from './routes/laporan'
 import { Route as KonfirmasiBayarRouteImport } from './routes/konfirmasi-bayar'
@@ -30,6 +34,11 @@ const TransaksiRoute = TransaksiRouteImport.update({
   path: '/transaksi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReminderDemoRoute = ReminderDemoRouteImport.update({
+  id: '/reminder-demo',
+  path: '/reminder-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -40,14 +49,29 @@ const ProfilRoute = ProfilRouteImport.update({
   path: '/profil',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PengumumanRoute = PengumumanRouteImport.update({
   id: '/pengumuman',
   path: '/pengumuman',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrganisasiSayaRoute = OrganisasiSayaRouteImport.update({
+  id: '/organisasi-saya',
+  path: '/organisasi-saya',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotifikasiRoute = NotifikasiRouteImport.update({
   id: '/notifikasi',
   path: '/notifikasi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MengapaPatunginRoute = MengapaPatunginRouteImport.update({
+  id: '/mengapa-patungin',
+  path: '/mengapa-patungin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -111,10 +135,14 @@ export interface FileRoutesByFullPath {
   '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
   '/laporan': typeof LaporanRoute
   '/login': typeof LoginRoute
+  '/mengapa-patungin': typeof MengapaPatunginRoute
   '/notifikasi': typeof NotifikasiRoute
+  '/organisasi-saya': typeof OrganisasiSayaRoute
   '/pengumuman': typeof PengumumanRoute
+  '/pricing': typeof PricingRoute
   '/profil': typeof ProfilRoute
   '/register': typeof RegisterRoute
+  '/reminder-demo': typeof ReminderDemoRoute
   '/transaksi': typeof TransaksiRoute
   '/laporan/$catId': typeof LaporanCatIdRoute
 }
@@ -128,10 +156,14 @@ export interface FileRoutesByTo {
   '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
   '/laporan': typeof LaporanRoute
   '/login': typeof LoginRoute
+  '/mengapa-patungin': typeof MengapaPatunginRoute
   '/notifikasi': typeof NotifikasiRoute
+  '/organisasi-saya': typeof OrganisasiSayaRoute
   '/pengumuman': typeof PengumumanRoute
+  '/pricing': typeof PricingRoute
   '/profil': typeof ProfilRoute
   '/register': typeof RegisterRoute
+  '/reminder-demo': typeof ReminderDemoRoute
   '/transaksi': typeof TransaksiRoute
   '/laporan/$catId': typeof LaporanCatIdRoute
 }
@@ -146,10 +178,14 @@ export interface FileRoutesById {
   '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
   '/laporan': typeof LaporanRoute
   '/login': typeof LoginRoute
+  '/mengapa-patungin': typeof MengapaPatunginRoute
   '/notifikasi': typeof NotifikasiRoute
+  '/organisasi-saya': typeof OrganisasiSayaRoute
   '/pengumuman': typeof PengumumanRoute
+  '/pricing': typeof PricingRoute
   '/profil': typeof ProfilRoute
   '/register': typeof RegisterRoute
+  '/reminder-demo': typeof ReminderDemoRoute
   '/transaksi': typeof TransaksiRoute
   '/laporan_/$catId': typeof LaporanCatIdRoute
 }
@@ -165,10 +201,14 @@ export interface FileRouteTypes {
     | '/konfirmasi-bayar'
     | '/laporan'
     | '/login'
+    | '/mengapa-patungin'
     | '/notifikasi'
+    | '/organisasi-saya'
     | '/pengumuman'
+    | '/pricing'
     | '/profil'
     | '/register'
+    | '/reminder-demo'
     | '/transaksi'
     | '/laporan/$catId'
   fileRoutesByTo: FileRoutesByTo
@@ -182,10 +222,14 @@ export interface FileRouteTypes {
     | '/konfirmasi-bayar'
     | '/laporan'
     | '/login'
+    | '/mengapa-patungin'
     | '/notifikasi'
+    | '/organisasi-saya'
     | '/pengumuman'
+    | '/pricing'
     | '/profil'
     | '/register'
+    | '/reminder-demo'
     | '/transaksi'
     | '/laporan/$catId'
   id:
@@ -199,10 +243,14 @@ export interface FileRouteTypes {
     | '/konfirmasi-bayar'
     | '/laporan'
     | '/login'
+    | '/mengapa-patungin'
     | '/notifikasi'
+    | '/organisasi-saya'
     | '/pengumuman'
+    | '/pricing'
     | '/profil'
     | '/register'
+    | '/reminder-demo'
     | '/transaksi'
     | '/laporan_/$catId'
   fileRoutesById: FileRoutesById
@@ -217,10 +265,14 @@ export interface RootRouteChildren {
   KonfirmasiBayarRoute: typeof KonfirmasiBayarRoute
   LaporanRoute: typeof LaporanRoute
   LoginRoute: typeof LoginRoute
+  MengapaPatunginRoute: typeof MengapaPatunginRoute
   NotifikasiRoute: typeof NotifikasiRoute
+  OrganisasiSayaRoute: typeof OrganisasiSayaRoute
   PengumumanRoute: typeof PengumumanRoute
+  PricingRoute: typeof PricingRoute
   ProfilRoute: typeof ProfilRoute
   RegisterRoute: typeof RegisterRoute
+  ReminderDemoRoute: typeof ReminderDemoRoute
   TransaksiRoute: typeof TransaksiRoute
   LaporanCatIdRoute: typeof LaporanCatIdRoute
 }
@@ -232,6 +284,13 @@ declare module '@tanstack/react-router' {
       path: '/transaksi'
       fullPath: '/transaksi'
       preLoaderRoute: typeof TransaksiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reminder-demo': {
+      id: '/reminder-demo'
+      path: '/reminder-demo'
+      fullPath: '/reminder-demo'
+      preLoaderRoute: typeof ReminderDemoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -248,6 +307,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfilRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pengumuman': {
       id: '/pengumuman'
       path: '/pengumuman'
@@ -255,11 +321,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PengumumanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/organisasi-saya': {
+      id: '/organisasi-saya'
+      path: '/organisasi-saya'
+      fullPath: '/organisasi-saya'
+      preLoaderRoute: typeof OrganisasiSayaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notifikasi': {
       id: '/notifikasi'
       path: '/notifikasi'
       fullPath: '/notifikasi'
       preLoaderRoute: typeof NotifikasiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mengapa-patungin': {
+      id: '/mengapa-patungin'
+      path: '/mengapa-patungin'
+      fullPath: '/mengapa-patungin'
+      preLoaderRoute: typeof MengapaPatunginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -345,10 +425,14 @@ const rootRouteChildren: RootRouteChildren = {
   KonfirmasiBayarRoute: KonfirmasiBayarRoute,
   LaporanRoute: LaporanRoute,
   LoginRoute: LoginRoute,
+  MengapaPatunginRoute: MengapaPatunginRoute,
   NotifikasiRoute: NotifikasiRoute,
+  OrganisasiSayaRoute: OrganisasiSayaRoute,
   PengumumanRoute: PengumumanRoute,
+  PricingRoute: PricingRoute,
   ProfilRoute: ProfilRoute,
   RegisterRoute: RegisterRoute,
+  ReminderDemoRoute: ReminderDemoRoute,
   TransaksiRoute: TransaksiRoute,
   LaporanCatIdRoute: LaporanCatIdRoute,
 }
