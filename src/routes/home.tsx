@@ -3,8 +3,8 @@ import { AppShell, useRole } from "@/components/AppShell";
 import { AppHeader } from "@/components/AppHeader";
 import { StatusBadge } from "@/components/StatusBadge";
 import { createProtectedRouteGuard } from "@/lib/route-guards";
-import { auth, formatRp, group, recentTx, announcements, initials, myDues, organizations } from "@/lib/mock";
-import { Plus, Megaphone, Users, BarChart3, Camera, ClipboardList, Building2, CheckCircle2, AlertTriangle, Clock, Wallet, ChevronRight, TrendingUp, Bell } from "lucide-react";
+import { auth, formatRp, group, recentTx, announcements, initials, myDues, programKerja, skemaIuran } from "@/lib/mock";
+import { Plus, Megaphone, Users, BarChart3, Camera, ClipboardList, Building2, CheckCircle2, AlertTriangle, Clock, Wallet, ChevronRight, TrendingUp, Bell, FolderOpen, Target, Coins } from "lucide-react";
 
 export const Route = createFileRoute("/home")({
   beforeLoad: createProtectedRouteGuard(),
@@ -81,47 +81,96 @@ function BendaharaHome() {
         })}
       </div>
 
-      {/* NEW: Organization Summary Section (V1.1) */}
-      <div className="px-5 mt-5">
-        <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-bold text-foreground">Ringkasan Organisasi</h4>
-          <Link to="/organisasi-saya" className="text-[11px] text-primary font-bold inline-flex items-center">
-            Lihat Semua <ChevronRight className="w-3 h-3" />
-          </Link>
-        </div>
-        <div className="bg-gradient-to-br from-primary/5 to-partial/5 rounded-2xl border border-primary/10 p-4">
-          <div className="flex items-start gap-3">
-            <div className="w-12 h-12 rounded-xl bg-primary grid place-items-center text-white shrink-0">
-              <Building2 className="w-6 h-6" />
-            </div>
-            <div className="flex-1">
-              <p className="text-[11px] text-muted-foreground font-medium">Total Saldo Organisasi</p>
-              <p className="text-xl font-extrabold text-foreground mt-0.5">{formatRp(organizations.find(o => o.isActive)?.balance || 0)}</p>
-              <div className="mt-3 flex items-center gap-4">
-                <div>
-                  <p className="text-[10px] text-muted-foreground">Total Anggota</p>
-                  <p className="text-[13px] font-bold text-foreground">{organizations.find(o => o.isActive)?.memberCount || 0}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] text-muted-foreground">Status Lunas</p>
-                  <div className="mt-0.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success text-white text-[10px] font-bold">
-                    <CheckCircle2 className="w-2.5 h-2.5" /> 100 dari 125
-                  </div>
-                </div>
-              </div>
-              <div className="mt-3 pt-3 border-t border-border flex items-center justify-between">
-                <span className="text-[11px] text-muted-foreground">Belum Bayar</span>
-                <span className="text-[12px] font-bold text-warning">25 anggota</span>
-              </div>
-            </div>
+      {/* Organization & Events (NEW: V2.4) */}
+      <div className="px-5 mt-5 grid grid-cols-2 gap-3">
+        {/* Iuran Organisasi Card */}
+        <Link to="/iuran-organisasi" className="bg-card rounded-2xl p-4 border border-border card-shadow flex flex-col gap-3 group hover:border-primary/30 transition-colors">
+          <div className="w-10 h-10 rounded-xl bg-primary-soft grid place-items-center group-hover:bg-primary/20 transition-colors">
+            <Coins className="w-5 h-5 text-primary" />
           </div>
-          <div className="mt-3 flex items-center gap-2 p-2.5 rounded-xl bg-white/50 border border-primary/10">
-            <TrendingUp className="w-4 h-4 text-success shrink-0" />
-            <p className="text-[11px] text-foreground">
-              <span className="font-bold">+12%</span> dari bulan lalu
+          <div>
+            <p className="text-[12px] font-bold text-foreground leading-tight">Iuran Organisasi</p>
+            <p className="text-[10px] text-muted-foreground">
+              {(() => {
+                const orgSkema = skemaIuran.filter(s => s.targetType === "organization");
+                return `${orgSkema.length} Jenis`;
+              })()}
             </p>
           </div>
+          <div className="mt-auto flex items-center justify-end text-[11px] text-primary font-bold">
+            Lihat <ChevronRight className="w-3 h-3 ml-0.5" />
+          </div>
+        </Link>
+
+        {/* Event Organisasi Card (Update with icon) */}
+        <Link to="/program-kerja" className="bg-card rounded-2xl p-4 border border-border card-shadow flex flex-col gap-3 group hover:border-success/30 transition-colors">
+          <div className="w-10 h-10 rounded-xl bg-success-soft grid place-items-center group-hover:bg-success/20 transition-colors">
+            <FolderOpen className="w-5 h-5 text-success" />
+          </div>
+          <div>
+            <p className="text-[12px] font-bold text-foreground leading-tight">Event Organisasi</p>
+            <p className="text-[10px] text-muted-foreground">
+              {(() => {
+                const activePrograms = programKerja.filter(p => p.status === "active");
+                return `${activePrograms.length} Aktif`;
+              })()}
+            </p>
+          </div>
+          <div className="mt-auto flex items-center justify-end text-[11px] text-success font-bold">
+            Lihat <ChevronRight className="w-3 h-3 ml-0.5" />
+          </div>
+        </Link>
+      </div>
+
+      {/* NEW: Event Summary (V2.0) */}
+      <div className="px-5 mt-5">
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-sm font-bold text-foreground">Detail Event Aktif</h4>
+          <Link to="/program-kerja" className="text-[11px] text-primary font-bold inline-flex items-center">
+            Kelola <ChevronRight className="w-3 h-3" />
+          </Link>
         </div>
+        <div className="grid grid-cols-2 gap-3">
+          {(() => {
+            const activePrograms = programKerja.filter(p => p.status === "active");
+            const completedThisMonth = programKerja.filter(p => p.status === "completed" && new Date(p.endDate).getMonth() === new Date().getMonth());
+            const totalActiveBudget = activePrograms.reduce((sum, p) => sum + p.targetBudget, 0);
+            const totalCollected = activePrograms.reduce((sum, p) => sum + p.collectedBudget, 0);
+            
+            return (
+              <>
+                <div className="bg-card rounded-2xl p-3.5 border border-border card-shadow">
+                  <div className="w-9 h-9 rounded-xl bg-success-soft grid place-items-center">
+                    <FolderOpen className="w-[18px] h-[18px] text-success" />
+                  </div>
+                  <p className="mt-2.5 text-[15px] font-extrabold text-foreground leading-tight">{activePrograms.length}</p>
+                  <p className="text-[11px] text-muted-foreground font-medium">Program Aktif</p>
+                </div>
+                <div className="bg-card rounded-2xl p-3.5 border border-border card-shadow">
+                  <div className="w-9 h-9 rounded-xl bg-primary-soft grid place-items-center">
+                    <Target className="w-[18px] h-[18px] text-primary" />
+                  </div>
+                  <p className="mt-2.5 text-[15px] font-extrabold text-foreground leading-tight">{completedThisMonth.length}</p>
+                  <p className="text-[11px] text-muted-foreground font-medium">Selesai Bulan Ini</p>
+                </div>
+              </>
+            );
+          })()}
+        </div>
+        <Link to="/program-kerja" className="mt-3 block">
+          <div className="p-3.5 rounded-xl bg-gradient-to-r from-partial/10 to-primary/10 border border-partial/20 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-partial grid place-items-center">
+              <TrendingUp className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-[12px] font-bold text-foreground">Budget Program Aktif</p>
+              <p className="text-[10px] text-muted-foreground">
+                {formatRp(programKerja.filter(p => p.status === "active").reduce((sum, p) => sum + p.collectedBudget, 0))} terkumpul
+              </p>
+            </div>
+            <ChevronRight className="w-4 h-4 text-partial" />
+          </div>
+        </Link>
       </div>
 
       {/* Quick actions */}
@@ -207,6 +256,24 @@ function AnggotaHome() {
   const myStatus = myDues[0]; // current month
   const pct = Math.round((group.collected / group.target) * 100);
 
+  // Handle horizontal scroll with mouse wheel and prevent parent scroll
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const isScrollingDown = e.deltaY > 0;
+    const isScrollingUp = e.deltaY < 0;
+    
+    // Check if we can scroll left or right
+    const canScrollLeft = container.scrollLeft > 0;
+    const canScrollRight = container.scrollLeft < container.scrollWidth - container.clientWidth;
+    
+    // If we can scroll horizontally, prevent parent scroll and do horizontal scroll
+    if ((isScrollingDown && canScrollRight) || (isScrollingUp && canScrollLeft)) {
+      e.preventDefault();
+      e.stopPropagation();
+      container.scrollLeft += e.deltaY;
+    }
+  };
+
   return (
     <div className="pb-4">
       <AppHeader name={name} period={group.period} />
@@ -248,16 +315,21 @@ function AnggotaHome() {
       </div>
 
       {/* Quick chips */}
-      <div className="mt-4 pl-5 flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
+      <div 
+        className="mt-4 pl-5 flex gap-2.5 overflow-x-auto pb-1 cursor-grab active:cursor-grabbing"
+        onWheel={handleWheel}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
         {[
           { to: "/konfirmasi-bayar", icon: Camera, label: "Konfirmasi Bayar" },
           { to: "/iuranku", icon: ClipboardList, label: "Rekap Iuranku" },
+          { to: "/event-saya", icon: FolderOpen, label: "Event Saya" },
           { to: "/notifikasi", icon: Megaphone, label: "Pengumuman" },
-          { to: "/info-grup", icon: Building2, label: "Info Grup" },
+          { to: "/info-grup", icon: Building2, label: "Info Organisasi" },
         ].map((c, i) => {
           const Ic = c.icon;
           return (
-            <Link key={i} to={c.to} className="shrink-0 inline-flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-card border border-border card-shadow text-[12px] font-bold text-foreground">
+            <Link key={i} to={c.to} className="shrink-0 inline-flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-card border border-border card-shadow text-[12px] font-bold text-foreground hover:bg-primary/5 transition-colors">
               <Ic className="w-4 h-4 text-primary" /> {c.label}
             </Link>
           );

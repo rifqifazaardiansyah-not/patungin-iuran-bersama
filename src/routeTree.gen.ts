@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TransaksiRouteImport } from './routes/transaksi'
 import { Route as ReminderDemoRouteImport } from './routes/reminder-demo'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ProgramKerjaRouteImport } from './routes/program-kerja'
 import { Route as ProfilRouteImport } from './routes/profil'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PengumumanRouteImport } from './routes/pengumuman'
@@ -23,11 +24,17 @@ import { Route as LaporanRouteImport } from './routes/laporan'
 import { Route as KonfirmasiBayarRouteImport } from './routes/konfirmasi-bayar'
 import { Route as JoinGrupRouteImport } from './routes/join-grup'
 import { Route as IurankuRouteImport } from './routes/iuranku'
+import { Route as IuranOrganisasiRouteImport } from './routes/iuran-organisasi'
 import { Route as InfoGrupRouteImport } from './routes/info-grup'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as EventSayaRouteImport } from './routes/event-saya'
 import { Route as AnggotaRouteImport } from './routes/anggota'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProgramKerjaBuatRouteImport } from './routes/program-kerja_.buat'
+import { Route as ProgramKerjaProgIdRouteImport } from './routes/program-kerja_.$progId'
 import { Route as LaporanCatIdRouteImport } from './routes/laporan_.$catId'
+import { Route as IuranOrganisasiIuranIdRouteImport } from './routes/iuran-organisasi_.$iuranId'
+import { Route as EventEventIdRouteImport } from './routes/event_.$eventId'
 
 const TransaksiRoute = TransaksiRouteImport.update({
   id: '/transaksi',
@@ -42,6 +49,11 @@ const ReminderDemoRoute = ReminderDemoRouteImport.update({
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramKerjaRoute = ProgramKerjaRouteImport.update({
+  id: '/program-kerja',
+  path: '/program-kerja',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfilRoute = ProfilRouteImport.update({
@@ -99,6 +111,11 @@ const IurankuRoute = IurankuRouteImport.update({
   path: '/iuranku',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IuranOrganisasiRoute = IuranOrganisasiRouteImport.update({
+  id: '/iuran-organisasi',
+  path: '/iuran-organisasi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InfoGrupRoute = InfoGrupRouteImport.update({
   id: '/info-grup',
   path: '/info-grup',
@@ -107,6 +124,11 @@ const InfoGrupRoute = InfoGrupRouteImport.update({
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventSayaRoute = EventSayaRouteImport.update({
+  id: '/event-saya',
+  path: '/event-saya',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AnggotaRoute = AnggotaRouteImport.update({
@@ -119,17 +141,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProgramKerjaBuatRoute = ProgramKerjaBuatRouteImport.update({
+  id: '/program-kerja_/buat',
+  path: '/program-kerja/buat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramKerjaProgIdRoute = ProgramKerjaProgIdRouteImport.update({
+  id: '/program-kerja_/$progId',
+  path: '/program-kerja/$progId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LaporanCatIdRoute = LaporanCatIdRouteImport.update({
   id: '/laporan_/$catId',
   path: '/laporan/$catId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IuranOrganisasiIuranIdRoute = IuranOrganisasiIuranIdRouteImport.update({
+  id: '/iuran-organisasi_/$iuranId',
+  path: '/iuran-organisasi/$iuranId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventEventIdRoute = EventEventIdRouteImport.update({
+  id: '/event_/$eventId',
+  path: '/event/$eventId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/anggota': typeof AnggotaRoute
+  '/event-saya': typeof EventSayaRoute
   '/home': typeof HomeRoute
   '/info-grup': typeof InfoGrupRoute
+  '/iuran-organisasi': typeof IuranOrganisasiRoute
   '/iuranku': typeof IurankuRoute
   '/join-grup': typeof JoinGrupRoute
   '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
@@ -141,16 +185,23 @@ export interface FileRoutesByFullPath {
   '/pengumuman': typeof PengumumanRoute
   '/pricing': typeof PricingRoute
   '/profil': typeof ProfilRoute
+  '/program-kerja': typeof ProgramKerjaRoute
   '/register': typeof RegisterRoute
   '/reminder-demo': typeof ReminderDemoRoute
   '/transaksi': typeof TransaksiRoute
+  '/event/$eventId': typeof EventEventIdRoute
+  '/iuran-organisasi/$iuranId': typeof IuranOrganisasiIuranIdRoute
   '/laporan/$catId': typeof LaporanCatIdRoute
+  '/program-kerja/$progId': typeof ProgramKerjaProgIdRoute
+  '/program-kerja/buat': typeof ProgramKerjaBuatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anggota': typeof AnggotaRoute
+  '/event-saya': typeof EventSayaRoute
   '/home': typeof HomeRoute
   '/info-grup': typeof InfoGrupRoute
+  '/iuran-organisasi': typeof IuranOrganisasiRoute
   '/iuranku': typeof IurankuRoute
   '/join-grup': typeof JoinGrupRoute
   '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
@@ -162,17 +213,24 @@ export interface FileRoutesByTo {
   '/pengumuman': typeof PengumumanRoute
   '/pricing': typeof PricingRoute
   '/profil': typeof ProfilRoute
+  '/program-kerja': typeof ProgramKerjaRoute
   '/register': typeof RegisterRoute
   '/reminder-demo': typeof ReminderDemoRoute
   '/transaksi': typeof TransaksiRoute
+  '/event/$eventId': typeof EventEventIdRoute
+  '/iuran-organisasi/$iuranId': typeof IuranOrganisasiIuranIdRoute
   '/laporan/$catId': typeof LaporanCatIdRoute
+  '/program-kerja/$progId': typeof ProgramKerjaProgIdRoute
+  '/program-kerja/buat': typeof ProgramKerjaBuatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/anggota': typeof AnggotaRoute
+  '/event-saya': typeof EventSayaRoute
   '/home': typeof HomeRoute
   '/info-grup': typeof InfoGrupRoute
+  '/iuran-organisasi': typeof IuranOrganisasiRoute
   '/iuranku': typeof IurankuRoute
   '/join-grup': typeof JoinGrupRoute
   '/konfirmasi-bayar': typeof KonfirmasiBayarRoute
@@ -184,18 +242,25 @@ export interface FileRoutesById {
   '/pengumuman': typeof PengumumanRoute
   '/pricing': typeof PricingRoute
   '/profil': typeof ProfilRoute
+  '/program-kerja': typeof ProgramKerjaRoute
   '/register': typeof RegisterRoute
   '/reminder-demo': typeof ReminderDemoRoute
   '/transaksi': typeof TransaksiRoute
+  '/event_/$eventId': typeof EventEventIdRoute
+  '/iuran-organisasi_/$iuranId': typeof IuranOrganisasiIuranIdRoute
   '/laporan_/$catId': typeof LaporanCatIdRoute
+  '/program-kerja_/$progId': typeof ProgramKerjaProgIdRoute
+  '/program-kerja_/buat': typeof ProgramKerjaBuatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/anggota'
+    | '/event-saya'
     | '/home'
     | '/info-grup'
+    | '/iuran-organisasi'
     | '/iuranku'
     | '/join-grup'
     | '/konfirmasi-bayar'
@@ -207,16 +272,23 @@ export interface FileRouteTypes {
     | '/pengumuman'
     | '/pricing'
     | '/profil'
+    | '/program-kerja'
     | '/register'
     | '/reminder-demo'
     | '/transaksi'
+    | '/event/$eventId'
+    | '/iuran-organisasi/$iuranId'
     | '/laporan/$catId'
+    | '/program-kerja/$progId'
+    | '/program-kerja/buat'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/anggota'
+    | '/event-saya'
     | '/home'
     | '/info-grup'
+    | '/iuran-organisasi'
     | '/iuranku'
     | '/join-grup'
     | '/konfirmasi-bayar'
@@ -228,16 +300,23 @@ export interface FileRouteTypes {
     | '/pengumuman'
     | '/pricing'
     | '/profil'
+    | '/program-kerja'
     | '/register'
     | '/reminder-demo'
     | '/transaksi'
+    | '/event/$eventId'
+    | '/iuran-organisasi/$iuranId'
     | '/laporan/$catId'
+    | '/program-kerja/$progId'
+    | '/program-kerja/buat'
   id:
     | '__root__'
     | '/'
     | '/anggota'
+    | '/event-saya'
     | '/home'
     | '/info-grup'
+    | '/iuran-organisasi'
     | '/iuranku'
     | '/join-grup'
     | '/konfirmasi-bayar'
@@ -249,17 +328,24 @@ export interface FileRouteTypes {
     | '/pengumuman'
     | '/pricing'
     | '/profil'
+    | '/program-kerja'
     | '/register'
     | '/reminder-demo'
     | '/transaksi'
+    | '/event_/$eventId'
+    | '/iuran-organisasi_/$iuranId'
     | '/laporan_/$catId'
+    | '/program-kerja_/$progId'
+    | '/program-kerja_/buat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnggotaRoute: typeof AnggotaRoute
+  EventSayaRoute: typeof EventSayaRoute
   HomeRoute: typeof HomeRoute
   InfoGrupRoute: typeof InfoGrupRoute
+  IuranOrganisasiRoute: typeof IuranOrganisasiRoute
   IurankuRoute: typeof IurankuRoute
   JoinGrupRoute: typeof JoinGrupRoute
   KonfirmasiBayarRoute: typeof KonfirmasiBayarRoute
@@ -271,10 +357,15 @@ export interface RootRouteChildren {
   PengumumanRoute: typeof PengumumanRoute
   PricingRoute: typeof PricingRoute
   ProfilRoute: typeof ProfilRoute
+  ProgramKerjaRoute: typeof ProgramKerjaRoute
   RegisterRoute: typeof RegisterRoute
   ReminderDemoRoute: typeof ReminderDemoRoute
   TransaksiRoute: typeof TransaksiRoute
+  EventEventIdRoute: typeof EventEventIdRoute
+  IuranOrganisasiIuranIdRoute: typeof IuranOrganisasiIuranIdRoute
   LaporanCatIdRoute: typeof LaporanCatIdRoute
+  ProgramKerjaProgIdRoute: typeof ProgramKerjaProgIdRoute
+  ProgramKerjaBuatRoute: typeof ProgramKerjaBuatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -298,6 +389,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/program-kerja': {
+      id: '/program-kerja'
+      path: '/program-kerja'
+      fullPath: '/program-kerja'
+      preLoaderRoute: typeof ProgramKerjaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profil': {
@@ -377,6 +475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IurankuRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/iuran-organisasi': {
+      id: '/iuran-organisasi'
+      path: '/iuran-organisasi'
+      fullPath: '/iuran-organisasi'
+      preLoaderRoute: typeof IuranOrganisasiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/info-grup': {
       id: '/info-grup'
       path: '/info-grup'
@@ -389,6 +494,13 @@ declare module '@tanstack/react-router' {
       path: '/home'
       fullPath: '/home'
       preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event-saya': {
+      id: '/event-saya'
+      path: '/event-saya'
+      fullPath: '/event-saya'
+      preLoaderRoute: typeof EventSayaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/anggota': {
@@ -405,11 +517,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/program-kerja_/buat': {
+      id: '/program-kerja_/buat'
+      path: '/program-kerja/buat'
+      fullPath: '/program-kerja/buat'
+      preLoaderRoute: typeof ProgramKerjaBuatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/program-kerja_/$progId': {
+      id: '/program-kerja_/$progId'
+      path: '/program-kerja/$progId'
+      fullPath: '/program-kerja/$progId'
+      preLoaderRoute: typeof ProgramKerjaProgIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/laporan_/$catId': {
       id: '/laporan_/$catId'
       path: '/laporan/$catId'
       fullPath: '/laporan/$catId'
       preLoaderRoute: typeof LaporanCatIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iuran-organisasi_/$iuranId': {
+      id: '/iuran-organisasi_/$iuranId'
+      path: '/iuran-organisasi/$iuranId'
+      fullPath: '/iuran-organisasi/$iuranId'
+      preLoaderRoute: typeof IuranOrganisasiIuranIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event_/$eventId': {
+      id: '/event_/$eventId'
+      path: '/event/$eventId'
+      fullPath: '/event/$eventId'
+      preLoaderRoute: typeof EventEventIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -418,8 +558,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnggotaRoute: AnggotaRoute,
+  EventSayaRoute: EventSayaRoute,
   HomeRoute: HomeRoute,
   InfoGrupRoute: InfoGrupRoute,
+  IuranOrganisasiRoute: IuranOrganisasiRoute,
   IurankuRoute: IurankuRoute,
   JoinGrupRoute: JoinGrupRoute,
   KonfirmasiBayarRoute: KonfirmasiBayarRoute,
@@ -431,10 +573,15 @@ const rootRouteChildren: RootRouteChildren = {
   PengumumanRoute: PengumumanRoute,
   PricingRoute: PricingRoute,
   ProfilRoute: ProfilRoute,
+  ProgramKerjaRoute: ProgramKerjaRoute,
   RegisterRoute: RegisterRoute,
   ReminderDemoRoute: ReminderDemoRoute,
   TransaksiRoute: TransaksiRoute,
+  EventEventIdRoute: EventEventIdRoute,
+  IuranOrganisasiIuranIdRoute: IuranOrganisasiIuranIdRoute,
   LaporanCatIdRoute: LaporanCatIdRoute,
+  ProgramKerjaProgIdRoute: ProgramKerjaProgIdRoute,
+  ProgramKerjaBuatRoute: ProgramKerjaBuatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

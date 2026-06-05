@@ -74,8 +74,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Patungin — Iuran Digital, Transparan & Terorganisir" },
-      { name: "description", content: "Patungin: kelola iuran organisasi & komunitas dengan transparan dan efisien." },
+      { title: "Patungin — Platform Manajemen Iuran & Keuangan Organisasi" },
+      { name: "description", content: "Patungin: platform manajemen iuran dan keuangan untuk organisasi, komunitas, dan event dengan transparan dan efisien." },
       { name: "author", content: "Patungin" },
       { property: "og:title", content: "Patungin" },
       { property: "og:description", content: "Iuran Digital, Transparan & Terorganisir" },

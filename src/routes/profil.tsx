@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { createProtectedRouteGuard } from "@/lib/route-guards";
 import { auth, initials } from "@/lib/mock";
-import { Pencil, Bell, Lock, Smartphone, HelpCircle, LogOut, ChevronRight, Building2, TrendingUp } from "lucide-react";
+import { Pencil, Bell, Lock, Smartphone, HelpCircle, LogOut, ChevronRight, TrendingUp, FolderOpen } from "lucide-react";
 
 export const Route = createFileRoute("/profil")({
   beforeLoad: createProtectedRouteGuard(),
@@ -17,17 +17,17 @@ function ProfilPage() {
 
   const items = [
     { icon: Pencil, label: "Edit Profil", to: null },
-    { icon: Building2, label: "Organisasi Saya", to: "/organisasi-saya" },
+    { icon: FolderOpen, label: "Event Organisasi", to: "/program-kerja" },
     { icon: Bell, label: "Pengaturan Notifikasi", to: null },
     { icon: Lock, label: "Ubah Password", to: null },
-    { icon: Smartphone, label: "Versi Aplikasi", suffix: "v1.1.0", to: null },
+    { icon: Smartphone, label: "Versi Aplikasi", suffix: "v2.1.0", to: null },
     { icon: HelpCircle, label: "Mengapa Patungin?", to: "/mengapa-patungin" },
   ];
 
   return (
     <AppShell>
       <div className="pb-6">
-        <div className="gradient-navy px-5 pt-8 pb-16 text-white relative">
+        <div className="gradient-navy px-5 pt-8 pb-8 text-white relative">{/* Non-overlapping design */}
           <div className="flex flex-col items-center text-center">
             <div className="w-20 h-20 rounded-full bg-white/15 backdrop-blur grid place-items-center text-xl font-extrabold border-4 border-white/20">
               {initials(name)}
@@ -40,7 +40,7 @@ function ProfilPage() {
           </div>
         </div>
 
-        <div className="px-5 -mt-10">
+        <div className="px-5 mt-4">{/* Positive margin instead of negative */}
           <div className="bg-card rounded-2xl border border-border card-shadow divide-y divide-border overflow-hidden">
             {items.map((it, i) => {
               const Ic = it.icon;
@@ -73,7 +73,7 @@ function ProfilPage() {
             </button>
           </div>
 
-          {/* NEW: Pricing CTA (V1.1) */}
+          {/* NEW: Pricing CTA (V2.1) */}
           <Link to="/pricing" className="mt-4 block">
             <div className="rounded-2xl gradient-primary p-4 text-white card-shadow-lg flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/15 grid place-items-center shrink-0">
@@ -81,7 +81,7 @@ function ProfilPage() {
               </div>
               <div className="flex-1">
                 <p className="text-sm font-extrabold">Upgrade ke Pro</p>
-                <p className="text-[11px] text-white/80 mt-0.5">Dapatkan fitur lengkap mulai Rp29k/bulan</p>
+                <p className="text-[11px] text-white/80 mt-0.5">Dapatkan fitur lengkap mulai Rp79k/bulan</p>
               </div>
               <ChevronRight className="w-5 h-5" />
             </div>

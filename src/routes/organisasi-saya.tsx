@@ -163,29 +163,7 @@ function OrganisasiSayaPage() {
           </div>
         </div>
 
-        {/* Join New Organization */}
-        <button className="mt-4 w-full p-4 rounded-2xl border-2 border-dashed border-border bg-secondary/50 flex items-center justify-center gap-2 text-primary hover:bg-secondary transition-colors">
-          <Plus className="w-5 h-5" />
-          <span className="text-sm font-bold">Gabung Organisasi Baru</span>
-        </button>
 
-        {/* Info Card */}
-        <div className="mt-4 p-4 rounded-2xl bg-primary-soft border border-primary/15">
-          <div className="flex gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary text-white grid place-items-center shrink-0">
-              <Building2 className="w-5 h-5" />
-            </div>
-            <div className="flex-1">
-              <p className="text-[12px] font-bold text-foreground">Kelola Banyak Organisasi</p>
-              <p className="text-[11px] text-muted-foreground mt-1">
-                Upgrade ke Pro untuk mengelola hingga 5 organisasi sekaligus dengan fitur lengkap.
-              </p>
-              <button className="mt-2 text-[11px] font-bold text-primary">
-                Lihat Paket Pro →
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </AppShell>
   );

@@ -16,8 +16,8 @@ function MengapaPatunginPage() {
   return (
     <AppShell>
       <div className="pb-6">
-        {/* Hero Section */}
-        <div className="gradient-navy px-5 pt-8 pb-12 text-white relative overflow-hidden">
+        {/* Hero Section - Non-overlapping */}
+        <div className="gradient-navy px-5 pt-8 pb-6 text-white relative overflow-hidden">
           <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-white/5" />
           <div className="absolute -left-12 -bottom-12 w-48 h-48 rounded-full bg-white/5" />
           <div className="relative">
@@ -35,7 +35,7 @@ function MengapaPatunginPage() {
           </div>
         </div>
 
-        <div className="px-5 -mt-8">
+        <div className="px-5 mt-4">{/* Positive margin */}
           {/* Stats Cards */}
           <div className="grid grid-cols-2 gap-3 mb-6">
             <div className="bg-card rounded-2xl border border-border card-shadow p-4">
@@ -120,20 +120,46 @@ function MengapaPatunginPage() {
               </div>
               <h2 className="text-lg font-extrabold text-foreground">Target Pasar</h2>
             </div>
-            <div className="grid grid-cols-2 gap-2.5">
-              {[
-                { label: "Organisasi Kampus", icon: "🎓", color: "primary" },
-                { label: "UKM & Himpunan", icon: "🏛️", color: "success" },
-                { label: "BEM & ORMAWA", icon: "👥", color: "warning" },
-                { label: "Komunitas", icon: "🤝", color: "partial" },
-                { label: "Panitia Event", icon: "🎉", color: "destructive" },
-                { label: "Lembaga Kampus", icon: "🏫", color: "primary" },
-              ].map((market, i) => (
-                <div key={i} className={`p-3 rounded-xl bg-${market.color}-soft border border-${market.color}/10 text-center`}>
-                  <div className="text-2xl mb-1">{market.icon}</div>
-                  <p className="text-[11px] font-bold text-foreground">{market.label}</p>
-                </div>
-              ))}
+            
+            {/* B2C Segment */}
+            <div className="mb-3">
+              <p className="text-[10px] font-bold text-muted-foreground mb-2 uppercase tracking-wide">B2C - Organisasi & Komunitas</p>
+              <div className="grid grid-cols-2 gap-2.5">
+                {[
+                  { label: "Organisasi Kampus", icon: "🎓", color: "primary" },
+                  { label: "UKM & Himpunan", icon: "🏛️", color: "success" },
+                  { label: "BEM & ORMAWA", icon: "👥", color: "warning" },
+                  { label: "Komunitas", icon: "🤝", color: "partial" },
+                  { label: "Panitia Event", icon: "🎉", color: "destructive" },
+                  { label: "Lembaga Kampus", icon: "🏫", color: "primary" },
+                ].map((market, i) => (
+                  <div key={i} className={`p-3 rounded-xl bg-${market.color}-soft border border-${market.color}/10 text-center`}>
+                    <div className="text-2xl mb-1">{market.icon}</div>
+                    <p className="text-[11px] font-bold text-foreground">{market.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* B2B/Enterprise Segment */}
+            <div>
+              <p className="text-[10px] font-bold text-muted-foreground mb-2 uppercase tracking-wide">B2B - Enterprise</p>
+              <div className="grid grid-cols-2 gap-2.5">
+                {[
+                  { label: "Universitas", icon: "🏛️", color: "primary", desc: "Kelola ratusan organisasi" },
+                  { label: "Yayasan", icon: "🏢", color: "success", desc: "Multi lembaga" },
+                  { label: "Koperasi", icon: "🏦", color: "warning", desc: "Iuran anggota besar" },
+                  { label: "Perusahaan", icon: "🏭", color: "partial", desc: "Employee contributions" },
+                ].map((market, i) => (
+                  <div key={i} className={`p-3 rounded-xl bg-${market.color}-soft border border-${market.color}/10`}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="text-xl">{market.icon}</div>
+                      <p className="text-[11px] font-bold text-foreground flex-1">{market.label}</p>
+                    </div>
+                    <p className="text-[9px] text-muted-foreground">{market.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -152,7 +178,7 @@ function MengapaPatunginPage() {
                   <p className="text-[13px] font-extrabold text-foreground">Freemium Model</p>
                 </div>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">
-                  Gratis untuk organisasi kecil (hingga 50 anggota), upgrade untuk fitur premium
+                  Gratis untuk organisasi kecil (hingga 30 anggota), upgrade untuk fitur premium
                 </p>
               </div>
               
@@ -162,18 +188,31 @@ function MengapaPatunginPage() {
                   <p className="text-[13px] font-extrabold text-foreground">Subscription (B2C)</p>
                 </div>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">
-                  Rp29.000/bulan untuk organisasi dengan kebutuhan lengkap
+                  Rp79.000/bulan - pricing berbasis kapasitas (anggota, program, skema iuran)
                 </p>
               </div>
               
               <div className="p-4 rounded-2xl bg-card border border-border card-shadow">
                 <div className="flex items-center gap-2 mb-2">
                   <Building2 className="w-4 h-4 text-warning" />
-                  <p className="text-[13px] font-extrabold text-foreground">Campus License (B2B)</p>
+                  <p className="text-[13px] font-extrabold text-foreground">Enterprise License (B2B)</p>
                 </div>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">
-                  Paket tahunan untuk kampus kelola ratusan organisasi
+                  Custom pricing untuk kampus - kelola ratusan organisasi dengan dashboard terpusat
                 </p>
+              </div>
+            </div>
+            
+            {/* NEW: Workspace Model Explanation */}
+            <div className="mt-3 p-3.5 rounded-xl bg-primary-soft border border-primary/20">
+              <div className="flex items-start gap-2">
+                <Building2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-[12px] font-bold text-primary">Model Workspace</p>
+                  <p className="text-[11px] text-foreground mt-1">
+                    1 Organisasi = 1 Workspace. Kami tidak menjual jumlah organisasi, tapi kapasitas dan kemampuan pengelolaan.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

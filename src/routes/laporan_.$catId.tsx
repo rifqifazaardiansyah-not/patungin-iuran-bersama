@@ -1,9 +1,9 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { PhoneFrame } from "@/components/PhoneFrame";
+import { AppShell } from "@/components/AppShell";
 import { createBendaharaOnlyGuard } from "@/lib/route-guards";
-import { categories, formatRp, initials } from "@/lib/mock";
-import { ArrowLeft, Bell, Send } from "lucide-react";
+import { skemaIuran, formatRp, initials } from "@/lib/mock";
+import { ArrowLeft, Bell, Send, Settings } from "lucide-react";
 
 export const Route = createFileRoute("/laporan_/$catId")({
   beforeLoad: createBendaharaOnlyGuard(),
@@ -11,41 +11,74 @@ export const Route = createFileRoute("/laporan_/$catId")({
 });
 
 function DetailKategoriPage() {
-  const { catId } = useParams({ from: "/laporan/$catId" });
-  const cat = categories.find(c => c.id === catId) || categories[0];
+  const { catId } = Route.useParams();
+  const cat = skemaIuran.find(c => c.id === catId);
+  
+  if (!cat) {
+    return (
+      <AppShell>
+        <div className="min-h-screen flex items-center justify-center px-6">
+          <div className="text-center">
+            <p className="text-lg font-bold text-foreground">Kategori tidak ditemukan</p>
+            <Link to="/laporan" className="mt-4 inline-block px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold">
+              Kembali ke Laporan
+            </Link>
+          </div>
+        </div>
+      </AppShell>
+    );
+  }
+  
   const [tab, setTab] = useState<"paid" | "unpaid">("paid");
   const pct = Math.round((cat.collected / cat.target) * 100);
 
+  const handleEditPayment = () => {
+    // TODO: implement edit payment handler
+  };
+
   return (
-    <PhoneFrame>
-      <div className="flex flex-col h-full relative">
+    <AppShell hideNav>
+      <div className="pb-8">
         {/* Header */}
-        <div className="px-5 pt-5 pb-6 bg-gradient-to-br from-navy to-primary text-white rounded-b-3xl">
-          <div className="flex items-center gap-3">
-            <Link to="/laporan" className="w-9 h-9 rounded-full bg-white/15 grid place-items-center">
-              <ArrowLeft className="w-4 h-4" />
-            </Link>
-            <p className="text-sm font-bold">Detail Kategori</p>
-          </div>
-
-          <div className="mt-5">
-            <span className="inline-block px-2 py-0.5 rounded-full bg-white/15 text-[10px] font-bold">{cat.typeLabel}</span>
-            <p className="mt-2 text-lg font-extrabold leading-tight">{cat.name}</p>
-            <p className="mt-0.5 text-[11px] text-white/70">{cat.period}</p>
-
-            <div className="mt-4 flex items-baseline justify-between">
-              <p className="text-xl font-extrabold">{formatRp(cat.collected)}</p>
-              <p className="text-[11px] text-white/70">dari {formatRp(cat.target)}</p>
+        <div className="gradient-navy px-5 pt-6 pb-6 text-white relative overflow-hidden">
+          <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-white/5" />
+          <div className="relative">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <button onClick={() => history.back()} className="w-9 h-9 rounded-full bg-white/15 grid place-items-center">
+                  <ArrowLeft className="w-4 h-4" />
+                </button>
+                <p className="text-sm font-bold">Detail Kategori</p>
+              </div>
+              {cat.targetType === "organization" && (
+                <button
+                  onClick={handleEditPayment}
+                  className="p-2 rounded-full bg-white/15 grid place-items-center hover:bg-white/25 transition-colors"
+                >
+                  <Settings className="w-4 h-4" />
+                </button>
+              )}
             </div>
-            <div className="mt-2 h-2 w-full bg-white/15 rounded-full overflow-hidden">
-              <div className="h-full bg-white rounded-full" style={{ width: `${Math.min(pct, 100)}%` }} />
+
+            <div className="mt-5">
+              <span className="inline-block px-2 py-0.5 rounded-full bg-white/15 text-[10px] font-bold">{cat.typeLabel}</span>
+              <p className="mt-2 text-lg font-extrabold leading-tight">{cat.name}</p>
+              <p className="mt-0.5 text-[11px] text-white/70">{cat.period}</p>
+
+              <div className="mt-4 flex items-baseline justify-between">
+                <p className="text-xl font-extrabold">{formatRp(cat.collected)}</p>
+                <p className="text-[11px] text-white/70">dari {formatRp(cat.target)}</p>
+              </div>
+              <div className="mt-2 h-2 w-full bg-white/15 rounded-full overflow-hidden">
+                <div className="h-full bg-white rounded-full" style={{ width: `${Math.min(pct, 100)}%` }} />
+              </div>
+              <p className="mt-1.5 text-[11px] text-white/80 font-semibold">{pct}% terkumpul · {cat.paidMembers}/{cat.totalMembers} anggota</p>
             </div>
-            <p className="mt-1.5 text-[11px] text-white/80 font-semibold">{pct}% terkumpul · {cat.paidMembers}/{cat.totalMembers} anggota</p>
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="px-5 mt-5">
+        <div className="px-5 mt-4">
           <div className="flex bg-secondary rounded-xl p-1">
             <button onClick={() => setTab("paid")} className={`flex-1 h-9 rounded-lg text-[12px] font-bold ${tab === "paid" ? "bg-card text-foreground card-shadow" : "text-muted-foreground"}`}>
               Sudah Bayar ({cat.paid.length})
@@ -57,7 +90,7 @@ function DetailKategoriPage() {
         </div>
 
         {/* List */}
-        <div className="flex-1 overflow-y-auto px-5 mt-3 pb-32">
+        <div className="px-5 mt-3 pb-6">
           {tab === "paid" ? (
             <div className="space-y-2.5">
               {cat.paid.length === 0 && (
@@ -100,12 +133,14 @@ function DetailKategoriPage() {
           )}
         </div>
 
-        {/* Sticky footer */}
-        <div className="absolute bottom-0 left-0 right-0 bg-card border-t border-border px-5 py-3 flex items-center justify-between">
-          <p className="text-[11px] text-muted-foreground font-medium">Total terkumpul kategori ini</p>
-          <p className="text-base font-extrabold text-primary">{formatRp(cat.collected)}</p>
+        {/* Total footer */}
+        <div className="px-5 mt-4 pt-4 border-t border-border">
+          <div className="flex items-center justify-between">
+            <p className="text-[11px] text-muted-foreground font-medium">Total terkumpul kategori ini</p>
+            <p className="text-base font-extrabold text-primary">{formatRp(cat.collected)}</p>
+          </div>
         </div>
       </div>
-    </PhoneFrame>
+    </AppShell>
   );
 }

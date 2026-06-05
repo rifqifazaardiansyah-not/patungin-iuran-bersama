@@ -3,8 +3,8 @@ import { useState, useMemo } from "react";
 import { AppShell } from "@/components/AppShell";
 import { StatusBadge } from "@/components/StatusBadge";
 import { createBendaharaOnlyGuard } from "@/lib/route-guards";
-import { formatRp, recentTx, categories } from "@/lib/mock";
-import { Download, ChevronDown, X, FileSpreadsheet, FileText, BarChart3, List, ChevronRight, CheckCircle2 } from "lucide-react";
+import { formatRp, recentTx, categories, programKerja } from "@/lib/mock";
+import { Download, ChevronDown, X, FileSpreadsheet, FileText, BarChart3, List, ChevronRight, CheckCircle2, Users, FolderOpen } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/laporan")({
@@ -24,6 +24,22 @@ function kindStyle(kind: string) {
   return { dot: "bg-primary", soft: "bg-primary-soft", text: "text-primary" };
 }
 
+const memberCategoryLabels = {
+  all: "Semua Anggota",
+  panitia: "Panitia",
+  peserta: "Peserta",
+  pengurus: "Pengurus",
+  custom: "Custom",
+};
+
+const memberCategoryColors = {
+  all: { bg: "bg-secondary", text: "text-foreground" },
+  panitia: { bg: "bg-warning-soft", text: "text-warning" },
+  peserta: { bg: "bg-primary-soft", text: "text-primary" },
+  pengurus: { bg: "bg-success-soft", text: "text-success" },
+  custom: { bg: "bg-partial-soft", text: "text-partial" },
+};
+
 function LaporanPage() {
   const [exportOpen, setExportOpen] = useState(false);
   const [view, setView] = useState<"list" | "chart">("list");
@@ -35,6 +51,21 @@ function LaporanPage() {
     if (jenis === "rutin") return categories.filter(c => c.kind !== "event");
     return categories.filter(c => c.kind === "event");
   }, [jenis]);
+  
+  // NEW V2.1: Group skema by program
+  const groupedByProgram = useMemo(() => {
+    const organizationSkema = filtered.filter(s => s.targetType === "organization");
+    const programSkema = filtered.filter(s => s.targetType === "program");
+    
+    const programGroups = programSkema.reduce((acc, skema) => {
+      const progId = skema.programKerjaId || "unknown";
+      if (!acc[progId]) acc[progId] = [];
+      acc[progId].push(skema);
+      return acc;
+    }, {} as Record<string, typeof filtered>);
+    
+    return { organizationSkema, programGroups };
+  }, [filtered]);
 
   // NEW: Demo export handler (V1.1)
   const handleExport = (type: "excel" | "pdf") => {
@@ -117,36 +148,108 @@ function LaporanPage() {
         </div>
 
         {view === "list" ? (
-          <div className="mt-3 space-y-3">
-            {filtered.map(cat => {
-              const pct = Math.round((cat.collected / cat.target) * 100);
-              const pc = pctColor(pct);
-              const ks = kindStyle(cat.kind);
+          <div className="mt-3 space-y-4">
+            {/* Organization-level Skema */}
+            {groupedByProgram.organizationSkema.length > 0 && (
+              <div>
+                <h3 className="text-xs font-bold text-muted-foreground mb-2.5 flex items-center gap-2">
+                  <Users className="w-3.5 h-3.5" />
+                  IURAN ORGANISASI ({groupedByProgram.organizationSkema.length})
+                </h3>
+                <div className="space-y-2.5">
+                  {groupedByProgram.organizationSkema.map(cat => {
+                    const pct = Math.round((cat.collected / cat.target) * 100);
+                    const pc = pctColor(pct);
+                    const ks = kindStyle(cat.kind);
+                    return (
+                      <Link key={cat.id} to="/laporan/$catId" params={{ catId: cat.id }} className="block bg-card rounded-2xl border border-border card-shadow p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`w-9 h-9 rounded-xl ${ks.soft} grid place-items-center shrink-0`}>
+                            <span className={`w-2.5 h-2.5 rounded-full ${ks.dot}`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="text-[13px] font-extrabold text-foreground leading-tight">{cat.name}</p>
+                              <span className={`shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold ${pc.bg} ${pc.text}`}>{pct}%</span>
+                            </div>
+                            <p className="mt-1 text-[11px] text-muted-foreground">{cat.paidMembers} / {cat.totalMembers} anggota sudah bayar</p>
+                            <div className="mt-2 flex items-baseline justify-between">
+                              <p className="text-[12px] font-bold text-primary">{formatRp(cat.collected)}</p>
+                              <p className="text-[11px] text-muted-foreground">Target: {formatRp(cat.target)}</p>
+                            </div>
+                            <div className="mt-2 h-1.5 w-full bg-secondary rounded-full overflow-hidden">
+                              <div className={`h-full ${pc.bar} rounded-full`} style={{ width: `${Math.min(pct, 100)}%` }} />
+                            </div>
+                            <div className="mt-2.5 flex items-center justify-end text-[11px] font-semibold text-primary">
+                              Lihat Detail <ChevronRight className="w-3.5 h-3.5" />
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            
+            {/* Program-level Skema (Grouped) */}
+            {Object.entries(groupedByProgram.programGroups).map(([progId, skemas]) => {
+              const program = programKerja.find(p => p.id === progId);
+              if (!program) return null;
+              
               return (
-                <Link key={cat.id} to="/laporan/$catId" params={{ catId: cat.id }} className="block bg-card rounded-2xl border border-border card-shadow p-4">
-                  <div className="flex items-start gap-3">
-                    <div className={`w-9 h-9 rounded-xl ${ks.soft} grid place-items-center shrink-0`}>
-                      <span className={`w-2.5 h-2.5 rounded-full ${ks.dot}`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <p className="text-[13px] font-extrabold text-foreground leading-tight">{cat.name}</p>
-                        <span className={`shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold ${pc.bg} ${pc.text}`}>{pct}%</span>
-                      </div>
-                      <p className="mt-1 text-[11px] text-muted-foreground">{cat.paidMembers} / {cat.totalMembers} anggota sudah bayar</p>
-                      <div className="mt-2 flex items-baseline justify-between">
-                        <p className="text-[12px] font-bold text-primary">{formatRp(cat.collected)}</p>
-                        <p className="text-[11px] text-muted-foreground">Target: {formatRp(cat.target)}</p>
-                      </div>
-                      <div className="mt-2 h-1.5 w-full bg-secondary rounded-full overflow-hidden">
-                        <div className={`h-full ${pc.bar} rounded-full`} style={{ width: `${Math.min(pct, 100)}%` }} />
-                      </div>
-                      <div className="mt-2.5 flex items-center justify-end text-[11px] font-semibold text-primary">
-                        Lihat Detail <ChevronRight className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
+                <div key={progId}>
+                  <h3 className="text-xs font-bold text-muted-foreground mb-2.5 flex items-center gap-2">
+                    <FolderOpen className="w-3.5 h-3.5" />
+                    {program.name.toUpperCase()} ({skemas.length})
+                  </h3>
+                  <div className="space-y-2.5">
+                    {skemas.map(cat => {
+                      const pct = Math.round((cat.collected / cat.target) * 100);
+                      const pc = pctColor(pct);
+                      const categoryStyle = memberCategoryColors[cat.memberCategory];
+                      
+                      return (
+                        <Link key={cat.id} to="/laporan/$catId" params={{ catId: cat.id }} className="block bg-card rounded-2xl border border-border card-shadow p-4">
+                          <div className="flex items-start gap-3">
+                            <div className={`w-9 h-9 rounded-xl ${categoryStyle.bg} grid place-items-center shrink-0`}>
+                              <Users className={`w-4 h-4 ${categoryStyle.text}`} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <p className="text-[13px] font-extrabold text-foreground leading-tight">{cat.name}</p>
+                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${categoryStyle.bg} ${categoryStyle.text}`}>
+                                      {memberCategoryLabels[cat.memberCategory]}
+                                    </span>
+                                  </div>
+                                  {cat.description && (
+                                    <p className="mt-0.5 text-[11px] text-muted-foreground">{cat.description}</p>
+                                  )}
+                                </div>
+                                <span className={`shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold ${pc.bg} ${pc.text}`}>{pct}%</span>
+                              </div>
+                              <p className="mt-1 text-[11px] text-muted-foreground">
+                                {cat.paidMembers} / {cat.totalMembers} {memberCategoryLabels[cat.memberCategory].toLowerCase()} sudah bayar
+                              </p>
+                              <div className="mt-2 flex items-baseline justify-between">
+                                <p className="text-[12px] font-bold text-primary">{formatRp(cat.collected)}</p>
+                                <p className="text-[11px] text-muted-foreground">Target: {formatRp(cat.target)}</p>
+                              </div>
+                              <div className="mt-2 h-1.5 w-full bg-secondary rounded-full overflow-hidden">
+                                <div className={`h-full ${pc.bar} rounded-full`} style={{ width: `${Math.min(pct, 100)}%` }} />
+                              </div>
+                              <div className="mt-2.5 flex items-center justify-end text-[11px] font-semibold text-primary">
+                                Lihat Detail <ChevronRight className="w-3.5 h-3.5" />
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
                   </div>
-                </Link>
+                </div>
               );
             })}
           </div>

@@ -23,7 +23,7 @@ function Splash() {
         </div>
         <div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">Patungin</h1>
-          <p className="mt-2 text-sm text-white/70 font-medium">Iuran Digital, Transparan & Terorganisir</p>
+          <p className="mt-2 text-sm text-white/70 font-medium">Platform Manajemen Iuran & Keuangan Organisasi</p>
         </div>
         <div className="mt-4 w-8 h-8 rounded-full border-2 border-white/30 border-t-white animate-spin" />
       </div>
